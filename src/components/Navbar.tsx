@@ -75,21 +75,21 @@ export default function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 px-4 py-3"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="glass-strong rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between">
+          <div className="glass-strong rounded-2xl px-3 sm:px-6 py-3 flex items-center justify-between gap-2">
             {/* Logo - always visible */}
-            <Link href="/" className="flex items-center gap-2 shrink-0">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center relative">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <Link href="/" className="flex items-center gap-2 min-w-0 shrink-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center relative shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                 </svg>
-                <svg width="8" height="8" viewBox="0 0 24 24" fill="white" className="absolute -top-0.5 -right-0.5">
+                <svg width="7" height="7" viewBox="0 0 24 24" fill="white" className="absolute -top-0.5 -right-0.5">
                   <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
                 </svg>
               </div>
-              <span className="font-bold text-lg flex items-baseline gap-1">
-                <span className="text-white">DreamLabs</span>
-                <span className="text-xs text-purple-400">by Xyrenium</span>
-              </span>
+              <div className="flex flex-col leading-none">
+                <span className="font-bold text-sm sm:text-lg text-white">DreamLabs</span>
+                <span className="text-[9px] sm:text-xs text-purple-400">by Xyrenium</span>
+              </div>
             </Link>
 
             {/* Desktop Nav - hidden on mobile */}
@@ -119,18 +119,18 @@ export default function Navbar() {
             )}
 
             {/* Right side controls */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1 sm:gap-3 shrink-0">
               {/* Token balance */}
               {isAuthenticated && (
                 <Link
                   href="/tokens"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/20 hover:border-purple-500/40 transition-all"
+                  className="flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/20 hover:border-purple-500/40 transition-all"
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-400">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-400 shrink-0">
                     <circle cx="12" cy="12" r="10" />
                     <path d="M12 6v12M6 12h12" />
                   </svg>
-                  <span className="text-sm font-semibold text-white">{tokens}</span>
+                  <span className="text-xs sm:text-sm font-semibold text-white">{tokens}</span>
                 </Link>
               )}
 
@@ -139,13 +139,13 @@ export default function Navbar() {
                 <div className="relative">
                   <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition-all"
                   >
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white shrink-0">
                       {user?.name?.charAt(0).toUpperCase()}
                     </div>
                     <span className="text-sm text-white/70 hidden sm:block">{user?.name}</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/50">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/50 hidden sm:block">
                       <path d="M6 9l6 6 6-6" />
                     </svg>
                   </button>

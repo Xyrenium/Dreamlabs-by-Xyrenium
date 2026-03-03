@@ -106,14 +106,33 @@ export default function FuturePathPage() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate it's an image
+      if (!file.type.startsWith('image/')) {
+        setError('Please select an image file');
+        return;
+      }
+      setError('');
       const reader = new FileReader();
       reader.onload = (ev) => setPhotoPreview(ev.target?.result as string);
+      reader.onerror = () => setError('Failed to read photo. Please try again.');
       reader.readAsDataURL(file);
+    }
+  };
+
+  // Fallback: direct click trigger for mobile browsers where label+htmlFor may fail
+  const handleUploadAreaClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      fileInputRef.current.click();
     }
   };
 
   const handleGenerate = () => {
     if (!dreamProfession.trim()) return;
+    if (!photoPreview) {
+      setError('Please upload a photo first');
+      return;
+    }
     setShowConfirm(true);
   };
 
@@ -264,21 +283,24 @@ export default function FuturePathPage() {
               </motion.div>
             )}
 
-            {/* Photo Upload (Optional) */}
+            {/* Photo Upload - REQUIRED */}
             <div>
               <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
-                {t.futurePath.uploadPhoto} <span className="text-[var(--text-muted)]">(optional)</span>
+                {t.futurePath.uploadPhoto} <span className="text-red-400">*</span>
               </label>
               <input
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="hidden"
+                style={{ position: 'absolute', width: 0, height: 0, opacity: 0, pointerEvents: 'none' }}
               />
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                className="w-full aspect-video max-h-[150px] rounded-2xl border-2 border-dashed border-[var(--border-color)] hover:border-purple-500/30 transition-all flex flex-col items-center justify-center gap-3 group overflow-hidden"
+              <div
+                onClick={handleUploadAreaClick}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleUploadAreaClick(); }}
+                className={'w-full aspect-video max-h-[150px] rounded-2xl border-2 border-dashed transition-all flex flex-col items-center justify-center gap-3 group overflow-hidden cursor-pointer ' + (photoPreview ? 'border-purple-500/30' : 'border-[var(--border-color)] hover:border-purple-500/30')}
               >
                 {photoPreview ? (
                   <div
@@ -294,10 +316,13 @@ export default function FuturePathPage() {
                         <line x1="12" y1="3" x2="12" y2="15" />
                       </svg>
                     </div>
-                    <span className="text-[var(--text-muted)] text-sm">Upload your photo (any size)</span>
+                    <span className="text-[var(--text-muted)] text-sm">Tap to upload photo</span>
                   </>
                 )}
-              </button>
+              </div>
+              {!photoPreview && error && (
+                <p className="text-red-400 text-xs mt-1">Photo is required</p>
+              )}
             </div>
 
             {/* Dream Profession */}
@@ -333,7 +358,7 @@ export default function FuturePathPage() {
             {/* Generate Button */}
             <button
               onClick={handleGenerate}
-              disabled={!dreamProfession.trim() || tokens < imageTokenCost}
+              disabled={!dreamProfession.trim() || !photoPreview || tokens < imageTokenCost}
               className="btn-magic w-full py-4 text-lg disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Generate Future Vision
@@ -380,6 +405,24 @@ export default function FuturePathPage() {
 
             {/* Generate Story Button */}
             <div className="space-y-4">
+              {/* Download Image Button */}
+              {result.futureImageUrl && (
+                <a
+                  href={result.futureImageUrl}
+                  download={'future-' + result.dreamProfession.toLowerCase().replace(/\s+/g, '-') + '.png'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline-magic w-full py-3 text-sm flex items-center justify-center gap-2"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  Download Image
+                </a>
+              )}
+
               <div className="text-center">
                 <p className="text-[var(--text-muted)] text-sm mb-2">
                   Want to see the journey to achieve this dream?
