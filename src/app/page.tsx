@@ -469,8 +469,8 @@ export default function HomePage() {
             {[
               { name: 'Qwen AI', desc: 'Text Generation', gradient: 'from-purple-500/10 to-purple-500/5' },
               { name: 'Wan 2.6', desc: 'Image & Video', gradient: 'from-blue-500/10 to-blue-500/5' },
-              { name: 'TTS Flash', desc: 'Voice Narrator', gradient: 'from-pink-500/10 to-pink-500/5' },
-              { name: 'FFmpeg', desc: 'Video Export', gradient: 'from-green-500/10 to-green-500/5' },
+              { name: 'Qwen3 TTS', desc: 'Voice Narrator', gradient: 'from-pink-500/10 to-pink-500/5' },
+              { name: 'FFmpeg', desc: 'Long video export', gradient: 'from-green-500/10 to-green-500/5' },
             ].map((tech, i) => (
               <motion.div
                 key={i}

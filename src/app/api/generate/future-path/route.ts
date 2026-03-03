@@ -49,7 +49,23 @@ async function generateWithPhoto(dreamProfession: string, photoBase64: string): 
 
     const content: Array<{text?: string; image?: string}> = [
       { 
-        text: `Look at this child's face in the reference image carefully. Create a new realistic photograph showing what this exact same person would look like as an adult ${dreamProfession}. Keep the same facial features (eyes, nose, mouth shape, skin tone) but aged to about 25-30 years old. The person should be wearing professional ${dreamProfession} uniform/attire in their work environment. The face must clearly resemble the child but as a grown-up. Photorealistic professional portrait, natural lighting.`
+        text: `Analyze the child in the reference image carefully. Pay close attention to:
+- GENDER: Determine if the child is male or female based on overall appearance
+- Hair: Length, style, color
+- Head covering: If wearing hijab, mukena, or any head covering, the adult version MUST also wear appropriate head covering
+- Face shape: Eyes, nose, mouth, skin tone
+- Clothing style: Traditional, modern, religious attire
+
+Based on this analysis, create a realistic photograph of this SAME person as an adult (age 25-30) working as a ${dreamProfession}. 
+
+CRITICAL RULES:
+1. If the child appears to be FEMALE (long hair, feminine features, hijab/mukena, dress), generate a FEMALE adult
+2. If the child appears to be MALE (short hair, masculine features), generate a MALE adult  
+3. If wearing hijab/mukena in the original photo, the adult MUST also wear hijab with professional ${dreamProfession} attire
+4. Preserve the exact same facial features matured to adult age
+5. Professional ${dreamProfession} uniform appropriate for the person's gender and religious attire
+
+Photorealistic professional portrait, natural lighting, high quality.`
       },
       { image: photoBase64 },
     ];
