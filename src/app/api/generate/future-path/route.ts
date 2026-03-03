@@ -50,20 +50,20 @@ async function generateWithPhoto(dreamProfession: string, photoBase64: string): 
     const content: Array<{text?: string; image?: string}> = [
       { 
         text: `Analyze the child in the reference image carefully. Pay close attention to:
-- GENDER: Determine if the child is male or female based on overall appearance
-- Hair: Length, style, color
-- Head covering: If wearing hijab, mukena, or any head covering, the adult version MUST also wear appropriate head covering
+- Gender: Determine male or female based on facial features and overall appearance
+- Hair: Length, style, and color. If visible, preserve and mature into adult version
+- Head covering: If the child is wearing hijab, mukena, or any head covering, keep it in the adult version. If not, do not add any head covering
 - Face shape: Eyes, nose, mouth, skin tone
-- Clothing style: Traditional, modern, religious attire
+- Clothing style: Traditional, modern, or religious attire
 
-Based on this analysis, create a realistic photograph of this SAME person as an adult (age 25-30) working as a ${dreamProfession}. 
+Create a realistic photograph of this SAME person as an adult (age 25-30) working as a ${dreamProfession}.
 
 CRITICAL RULES:
-1. If the child appears to be FEMALE (long hair, feminine features, hijab/mukena, dress), generate a FEMALE adult
-2. If the child appears to be MALE (short hair, masculine features), generate a MALE adult  
-3. If wearing hijab/mukena in the original photo, the adult MUST also wear hijab with professional ${dreamProfession} attire
-4. Preserve the exact same facial features matured to adult age
-5. Professional ${dreamProfession} uniform appropriate for the person's gender and religious attire
+1. Match gender based on facial features (not clothing alone)
+2. Preserve hairstyle if no head covering is present
+3. Only replicate hijab/mukena if it exists in the original photo
+4. Mature facial features naturally to adult age
+5. Use professional ${dreamProfession} attire consistent with gender and any existing religious clothing
 
 Photorealistic professional portrait, natural lighting, high quality.`
       },
